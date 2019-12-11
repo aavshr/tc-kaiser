@@ -8,16 +8,21 @@ import (
 )
 
 var (
-	s3Bucket string
+	s3Bucket  string
+	awsRegion string
 )
 
 func bootstrap() {
 	if s3Bucket = os.Getenv("S3_BUCKET"); s3Bucket == "" {
 		panic("No env var S3_BUCKET set")
 	}
+	if awsRegion = os.Getenv("AWS_REGION"); awsRegion == "" {
+		panic("No env var AWS_REGION set")
+	}
 }
 
 func main() {
+	bootstrap()
 	api := echo.New()
 	api.Any("/", FetchS3)
 	log.Fatal(api.Start(":5000"))
