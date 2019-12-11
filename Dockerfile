@@ -7,8 +7,10 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
 FROM alpine:latest as certs
 RUN apk --no-cache add ca-certificates
 
-FROM scratch
+FROM nginx:stable-alpine
 COPY --from=certs /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 WORKDIR /root/
+COPY --from=base /app/proxy/nginx/default.conf /etc/nginx/conf.d
 COPY --from=base /app/proxy/server .
-CMD ["./server"]
+COPY --from=base /app/proxy/nginx/start.sh .
+CMD ["./start.sh"]
