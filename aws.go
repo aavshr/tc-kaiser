@@ -32,5 +32,5 @@ func (c *awsClient) DownloadFile(bucket, key string) ([]byte, error) {
 		fmt.Println("aws.DownloadFile:", err)
 		return nil, err
 	}
-	return buffer, nil
+	return awsBuffer.Bytes(), nil
 }

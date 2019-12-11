@@ -10,6 +10,7 @@ import (
 var (
 	s3Bucket  string
 	awsRegion string
+	ac        awsClient
 )
 
 func bootstrap() {
@@ -19,6 +20,7 @@ func bootstrap() {
 	if awsRegion = os.Getenv("AWS_REGION"); awsRegion == "" {
 		panic("No env var AWS_REGION set")
 	}
+	ac.init(awsRegion)
 }
 
 func main() {
