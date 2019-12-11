@@ -1,15 +1,8 @@
-setup:
-  config:
-    S3_BUCKET: my-example-bucket
 build:
   docker:
     web: Dockerfile
   config:
     S3_BUCKET: tc-deta-bucket
     AWS_REGION: eu-central-1
-release:
-  command:
-    - ./deployment-tasks.sh
-  image: worker
 run:
   web: ./start.sh 
