@@ -2,6 +2,7 @@ FROM golang:1.13.0 AS base
 WORKDIR /app/proxy
 COPY *.go go.mod go.sum ./
 COPY . .
+COPY ./.secrets ./
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o server .
 
 FROM alpine:latest as certs
@@ -13,6 +14,8 @@ WORKDIR /root/
 COPY --from=base /app/proxy/nginx/default.conf /etc/nginx/conf.d
 COPY --from=base /app/proxy/server .
 COPY --from=base /app/proxy/nginx/start.sh .
+RUN mkdir .aws
+COPY --from=base /app/proxy/.secrets/aws/ .aws/ 
 ENV S3_BUCKET tc-deta-bucket
 ENV AWS_REGION eu-central-1
 CMD ["./start.sh"]
