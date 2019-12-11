@@ -13,4 +13,6 @@ WORKDIR /root/
 COPY --from=base /app/proxy/nginx/default.conf /etc/nginx/conf.d
 COPY --from=base /app/proxy/server .
 COPY --from=base /app/proxy/nginx/start.sh .
+ENV S3_BUCKET tc-deta-bucket
+ENV AWS_REGION eu-central-1
 CMD ["./start.sh"]
