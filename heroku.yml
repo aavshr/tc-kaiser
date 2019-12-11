@@ -1,0 +1,8 @@
+build:
+  docker:
+    web: Dockerfile
+  config:
+    S3_BUCKET: tc-deta-bucket
+    AWS_REGION: eu-central-1
+run:
+  web: ./start.sh 
